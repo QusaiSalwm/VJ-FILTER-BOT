@@ -53,7 +53,7 @@ async def index_files(bot, query):
 
 @Client.on_message(filters.private & filters.command('index'))
 async def send_for_index(bot, message):
-     if message.from_user.id not in ADMINS:
+    if message.from_user.id not in ADMINS:
         return await message.reply("You are not authorized to use this command.")
     vj = await bot.ask(message.chat.id, "**Now Send Me Your Channel Last Post Link Or Forward A Last Message From Your Index Channel.\n\nAnd You Can Set Skip Number By - /setskip yourskipnumber**")
     if vj.forward_from_chat.type == enums.ChatType.CHANNEL:
