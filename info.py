@@ -13,7 +13,7 @@ id_pattern = re.compile(r'^.\d+$')
 SESSION = environ.get('SESSION', 'TechVJBot')
 API_ID = int(environ.get('API_ID', '26677274'))
 API_HASH = environ.get('API_HASH', '5118f277677e273b90a7bd866d5b7731')
-BOT_TOKEN = environ.get('BOT_TOKEN', "7068152758:AAHz_zNMQLkeKtJezuvgLZrZ-4KBKWssmus")
+BOT_TOKEN = environ.get('BOT_TOKEN', "")
 
 
 # Bot settings
@@ -161,7 +161,7 @@ YEARS = ["1900", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998",
 
 
 # Online Stream and Download
-STREAM_MODE = bool(environ.get('STREAM_MODE', True)) # Set True or False
+STREAM_MODE = bool(environ.get('STREAM_MODE', False)) # Set True or False
 
 # If Stream Mode Is True Then Fill All Required Variable, If False Then Don't Fill.
 MULTI_CLIENT = False
