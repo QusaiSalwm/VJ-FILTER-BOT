@@ -635,11 +635,9 @@ async def send_all(bot, userid, files, ident, chat_id, user_name, query):
                         reply_markup=InlineKeyboardMarkup(
                             [
                                 [
-                                InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=GRP_LNK),
-                                InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
-                            ],[
-                                InlineKeyboardButton("Bᴏᴛ Oᴡɴᴇʀ", url="t.me/kingvj01")
-                                ]
+                                InlineKeyboardButton('Facebook', url="https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA=="),
+                                InlineKeyboardButton('Inatgram', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL")
+                            ]
                             ]
                         )
                     )
