@@ -290,23 +290,19 @@ async def start(client, message):
                     )
                 if STREAM_MODE == True:
                     button = [[
-                        InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=f'https://t.me/{SUPPORT_CHAT}'),
-                        InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
-                    ],[
-                        InlineKeyboardButton('𝗕𝗢𝗧 𝗢𝗪𝗡𝗘𝗥', url="https://t.me/KingVJ01")
-                    ],[
+                        InlineKeyboardButton('Facebook', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL"),
+                        InlineKeyboardButton('Instagram', url="https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA==")
+                    ],
                         InlineKeyboardButton("🚀 Fast Download 🚀", url=download),
                         InlineKeyboardButton('🖥️ Watch online 🖥️', url=stream)
                     ],[
                         InlineKeyboardButton("• ᴡᴀᴛᴄʜ ɪɴ ᴡᴇʙ ᴀᴘᴘ •", web_app=WebAppInfo(url=stream))
                     ]]
                 else:
-                    button = [[
-                        InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=f'https://t.me/{SUPPORT_CHAT}'),
-                        InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
-                    ],[
-                        InlineKeyboardButton('𝗕𝗢𝗧 𝗢𝗪𝗡𝗘𝗥', url="https://t.me/KingVJ01")
-                    ]]
+                    button = [
+                        InlineKeyboardButton('Facebook', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL"),
+                        InlineKeyboardButton('Instagram', url="https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA==")
+                    ]
                 msg = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
