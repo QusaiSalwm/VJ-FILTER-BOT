@@ -130,7 +130,7 @@ async def advantage_spoll_choker(bot, query):
     if files:
         k = (movie, files, offset, total_results)
         ai_search = True
-        reply_msg = await query.message.edit_text(f"<b><i>Searching For {movie} 🔍</i></b>")
+        reply_msg = await query.message.edit_text(f"<b><i>يتم البحث عن{movie} 🔍</i></b>")
         await auto_filter(bot, movie, query, reply_msg, ai_search, k)
     else:
         reqstr1 = query.from_user.id if query.from_user else 0
