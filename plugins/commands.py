@@ -411,10 +411,10 @@ async def start(client, message):
                     ]]
                 else:
                     button = [[
-                        InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=f'https://t.me/{SUPPORT_CHAT}'),
-                        InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
+                        InlineKeyboardButton('Facebook', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL"),
+                        InlineKeyboardButton('Instagram', url="https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA==")
                     ],[
-                        InlineKeyboardButton('𝗕𝗢𝗧 𝗢𝗪𝗡𝗘𝗥', url="https://t.me/KingVJ01")
+                        InlineKeyboardButton('𝗕𝗢𝗧 Dev', url="https://t.me/DeadOne101")
                     ]]
                 try:
                     p = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False, reply_markup=InlineKeyboardMarkup(button))
@@ -620,7 +620,7 @@ async def start(client, message):
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
-            title = '@VJ_Botz  ' + ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), file.file_name.split()))
+            title = '@DeadOne101  ' + ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), file.file_name.split()))
             size=get_size(file.file_size)
             f_caption = f"<code>{title}</code>"
             if CUSTOM_FILE_CAPTION:
@@ -633,12 +633,12 @@ async def start(client, message):
                 reply_markup=InlineKeyboardMarkup(button)
             )
             btn = [[
-                InlineKeyboardButton("Get File Again", callback_data=f'del#{file_id}')
+                InlineKeyboardButton("احصل على الفيلم/الحلقة الذي تم حذفها ", callback_data=f'del#{file_id}')
             ]]
-            k = await msg.reply("<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie File/Video will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File/Video to your Saved Messages and Start Download there</i></b>",quote=True)
+            k = await msg.reply("<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nهذه الحلقة/الفيلم سيتم حذفه خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>من فضلك قم بتحويل الملف لرسائلك المحفوظة وقم بتحميله هناك ومشاهدة ممتعة 😇</i></b>",quote=True)
             await asyncio.sleep(600)
             await msg.delete()
-            await k.edit_text("<b>Your File/Video is successfully deleted!!!\n\nClick below button to get your deleted file 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
+            await k.edit_text("<b>وم حذف الملف بنجاح!!!\n\nاضغط على الزر في الأسفل اذا اردت الملف مجددا ا  </b>",reply_markup=InlineKeyboardMarkup(btn))
             return
         except:
             pass
