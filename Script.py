@@ -255,7 +255,7 @@ Nᴀᴍᴇ - {}"""
     IMDB_TEMPLATE_TXT = """
 <b>Query: {qurey}
 
-IMDb Data:
+IMDb معلومات:
 
 <b>🏷 الإسم</b>: <a href={url}>{title}</a>
 🎭 النوع: {genres}
