@@ -67,6 +67,7 @@ async def start(client, message):
                 InlineKeyboardButton('✪ Facebook', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL"),
                 InlineKeyboardButton('⌬ Instagram', url='https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA==')
             ],[
+                InlineKeyboardButton('مطور البوت', url="https://t.me/DeadOne101")
                 #InlineKeyboardButton('〄 Hᴇʟᴘ', callback_data='help'),
                 #InlineKeyboardButton('⍟ Aʙᴏᴜᴛ', callback_data='about')
             ],[
