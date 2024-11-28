@@ -641,7 +641,7 @@ async def start(client, message):
             k = await msg.reply("<b><u>❗️❗️❗️هام❗️️❗️❗️</u></b>\n\nهذه الحلقة/الفيلم سيتم حذفه خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>من فضلك قم بتحويل الملف لمحادثة خاصة وقم بتحميله هناك ومشاهدة ممتعة 😇</i></b>",quote=True)
             await asyncio.sleep(600)
             await msg.delete()
-            await k.edit_text("<b>وم حذف الملف بنجاح!!!\n\nاضغط على الزر في الأسفل اذا اردت الملف مجددا ا  </b>",reply_markup=InlineKeyboardMarkup(btn))
+            await k.edit_text("<b>تم حذف الملف بنجاح!!!\n\nاضغط على الزر في الأسفل اذا اردت الملف مجددا ا  </b>",reply_markup=InlineKeyboardMarkup(btn))
             return
         except:
             pass
@@ -692,7 +692,7 @@ async def start(client, message):
     k = await msg.reply("<b><u>❗️❗️❗️هام❗️️❗️❗️</u></b>\n\nسيتم حذف هذا الملف خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>رجاءا قم بتحويل الملف الى الرسائل المجفوظة لديك وتحميله هناك ومشاهدة ممتعة 🎬🌹</i></b>",quote=True)
     await asyncio.sleep(600)
     await msg.delete()
-    await k.edit_text("<b>Your File/Video is successfully deleted!!!\n\nClick below button to get your deleted file 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
+    await k.edit_text("<b>تم حذف الملف بنجاح!!!\n\nاضغط على الزر في الأسفل اذا اردت استرداد الملف مجددا 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
     return   
 
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
