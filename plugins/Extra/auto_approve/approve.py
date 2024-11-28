@@ -291,7 +291,7 @@ async def auto_approve(client, message: ChatJoinRequest):
                 k = await client.send_message(message.from_user.id,"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie File/Video will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File/Video to your Saved Messages and Start Download there</i></b>",quote=True)
                 await asyncio.sleep(600)
                 await msg.delete()
-                await k.edit_text("<b>Your File/Video is successfully deleted!!!\n\nClick below button to get your deleted file 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
+                await k.edit_text("<b>تم حذف الملف بنجاح!!!\n\n اضغط على الزر في الأسفل اذا اردت استرداد الملف 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
                 return
             except:
                 pass
@@ -351,7 +351,7 @@ async def auto_approve(client, message: ChatJoinRequest):
         k = await client.send_message(message.from_user.id, "<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie File/Video will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File/Video to your Saved Messages and Start Download there</i></b>",quote=True)
         await asyncio.sleep(600)
         await msg.delete()
-        await k.edit_text("<b>Your File/Video is successfully deleted!!!\n\nClick below button to get your deleted file 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
+        await k.edit_text("<b>تم حذف الملف بنجاح!!!\n\nاضغط على الزر في الأسفل اذا اردت استرداد الملف 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
         return
     if AUTO_APPROVE_MODE == True:
         if not await db.is_user_exist(message.from_user.id):
