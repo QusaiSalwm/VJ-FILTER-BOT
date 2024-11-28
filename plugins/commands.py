@@ -27,10 +27,13 @@ async def start(client, message):
     except:
         pass
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        buttons = [
+        buttons = [[
             InlineKeyboardButton('✪ Facebook', url="https://www.facebook.com/profile.php?id=61557540113498&mibextid=ZbWKwL"),
             InlineKeyboardButton('⌬ Instagram', url='https://www.instagram.com/cimaparadiso1988?igsh=MXdzc3owaGR2bHJ6MA==')
+        ],[
+            InlineKeyboardButton('مطور البوت', url="https://t.me/DeadOne101")
         ]
+                 ]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply(script.START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
         await asyncio.sleep(2) # 😢 https://github.com/EvamariaTG/EvaMaria/blob/master/plugins/p_ttishow.py#L17 😬 wait a bit, before checking.
@@ -333,7 +336,7 @@ async def start(client, message):
             await k.delete()
         except:
             pass
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie Files/Videos will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this ALL Files/Videos to your Saved Messages and Start Download there</i></b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️هام❗️️❗️❗️</u></b>\n\nهذه الملفات سيتم حذفه خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>من فضلك قم بتحويل الملفات لمحادثة خاصة وقم بتحميله هناك ومشاهدة ممتعة 😇</i></b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
@@ -447,7 +450,7 @@ async def start(client, message):
         except:
             pass
         await sts.delete()
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie Files/Videos will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this ALL Files/Videos to your Saved Messages and Start Download there</i></b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️هام❗️️❗️❗️</u></b>\n\nهذه الملفات سيتم حذفه خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>من فضلك قم بتحويل الملفات لمحادثة خاصة وقم بتحميله هناك ومشاهدة ممتعة 😇</i></b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
@@ -558,7 +561,7 @@ async def start(client, message):
                 reply_markup=InlineKeyboardMarkup(button)
             )
             filesarr.append(msg)
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie Files/Videos will be deleted in <b><u>10 mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this ALL Files/Videos to your Saved Messages and Start Download there</i></b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️هام❗️️❗️❗️</u></b>\n\nهذه الملفات سيتم حذفه خلال <b><u>10 دقائق</u> 🫥 <i></b>(تجنبا لحقوق النشر)</i>.\n\n<b><i>من فضلك قم بتحويل الملفات لمحادثة خاصة وقم بتحميله هناك ومشاهدة ممتعة 😇</i></b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
