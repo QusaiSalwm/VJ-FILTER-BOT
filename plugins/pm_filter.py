@@ -2830,7 +2830,25 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
         ]]
         if NO_RESULTS_MSG:
             await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
-        k = await reply_msg.edit_text(text=script.I_CUDNT.format(mv_rqst), reply_markup=InlineKeyboardMarkup(button))
+        try:
+            if reply_msg:
+                        await reply_msg.edit_text(
+                            text=script.I_CUDNT.format(mv_rqst),
+                            reply_markup=InlineKeyboardMarkup(button)
+                        )
+            else:
+                await msg.reply_text(
+                    text=script.I_CUDNT.format(mv_rqst),
+                    reply_markup=InlineKeyboardMarkup(button)
+                )
+        except Exception as e:
+            print(f"❌ Failed to edit message: {e}")
+            # fallback: send a new message instead
+            await msg.reply_text(
+                text=script.I_CUDNT.format(mv_rqst),
+                reply_markup=InlineKeyboardMarkup(button)
+            )
+
         await asyncio.sleep(30)
         await k.delete()
         return
@@ -3340,3 +3358,4 @@ async def global_filters(client, message, text=False):
                 break
     else:
         return False
+
