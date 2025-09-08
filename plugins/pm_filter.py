@@ -2816,62 +2816,130 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
     reqstr1 = msg.from_user.id if msg.from_user else 0
     reqstr = await client.get_users(reqstr1)
     settings = await get_settings(msg.chat.id)
+
+    # cleanup query
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
-        "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
+        "", msg.text, flags=re.IGNORECASE
+    )
     query = query.strip() + " movie"
+
+    # fallback message holder
+    k = None  
+
+    # 🔍 try to get posters
     try:
         movies = await get_poster(mv_rqst, bulk=True)
     except Exception as e:
         logger.exception(e)
         reqst_gle = mv_rqst.replace(" ", "+")
-        button = [[
-            InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
-        ]]
+        button = [[InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")]]
+        
         if NO_RESULTS_MSG:
-            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
+            await client.send_message(
+                chat_id=LOG_CHANNEL,
+                text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst))
+            )
+
+        # ✅ safe send/edit
         try:
             if reply_msg:
-                        await reply_msg.edit_text(
-                            text=script.I_CUDNT.format(mv_rqst),
-                            reply_markup=InlineKeyboardMarkup(button)
-                        )
+                try:
+                    k = await reply_msg.edit_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
+                except Exception:
+                    k = await msg.reply_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
             else:
-                await msg.reply_text(
+                k = await msg.reply_text(
                     text=script.I_CUDNT.format(mv_rqst),
                     reply_markup=InlineKeyboardMarkup(button)
                 )
         except Exception as e:
-            print(f"❌ Failed to edit message: {e}")
-            # fallback: send a new message instead
-            await msg.reply_text(
-                text=script.I_CUDNT.format(mv_rqst),
-                reply_markup=InlineKeyboardMarkup(button)
-            )
+            print(f"❌ Total failure sending message: {e}")
+            return
 
+        # safe delete
         await asyncio.sleep(30)
-        await k.delete()
+        if k:
+            try:
+                await k.delete()
+            except Exception:
+                pass
         return
-    movielist = []
+
+    # 🎬 if no movies found
     if not movies:
         reqst_gle = mv_rqst.replace(" ", "+")
-        button = [[
-            InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
-        ]]
+        button = [[InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")]]
+        
         if NO_RESULTS_MSG:
-            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
-        k = await reply_msg.edit_text(text=script.I_CUDNT.format(mv_rqst), reply_markup=InlineKeyboardMarkup(button))
+            await client.send_message(
+                chat_id=LOG_CHANNEL,
+                text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst))
+            )
+
+        try:
+            if reply_msg:
+                try:
+                    k = await reply_msg.edit_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
+                except Exception:
+                    k = await msg.reply_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
+            else:
+                k = await msg.reply_text(
+                    text=script.I_CUDNT.format(mv_rqst),
+                    reply_markup=InlineKeyboardMarkup(button)
+                )
+        except Exception as e:
+            print(f"❌ Total failure sending message: {e}")
+            return
+
         await asyncio.sleep(30)
-        await k.delete()
+        if k:
+            try:
+                await k.delete()
+            except Exception:
+                pass
         return
+
+    # 📜 prepare spell-check list
+    movielist = []
     movielist += [movie.get('title') for movie in movies]
     movielist += [f"{movie.get('title')} {movie.get('year')}" for movie in movies]
     SPELL_CHECK[mv_id] = movielist
-    if AI_SPELL_CHECK == True and vj_search == True:
+
+    # 🤖 AI spell check
+    if AI_SPELL_CHECK and vj_search:
         vj_search_new = False
-        vj_ai_msg = await reply_msg.edit_text("<b><i> 🔍 لقد طلبت الاسم بشكل غير صحيح يقوم الذكاء الصنعي بالبحث عن الاسم الصحيح</i></b>")
-        movienamelist = []
-        movienamelist += [movie.get('title') for movie in movies]
+        vj_ai_msg = None
+        try:
+            if reply_msg:
+                try:
+                    vj_ai_msg = await reply_msg.edit_text(
+                        "<b><i> 🔍 لقد طلبت الاسم بشكل غير صحيح يقوم الذكاء الصنعي بالبحث عن الاسم الصحيح</i></b>"
+                    )
+                except Exception:
+                    vj_ai_msg = await msg.reply_text(
+                        "<b><i> 🔍 لقد طلبت الاسم بشكل غير صحيح يقوم الذكاء الصنعي بالبحث عن الاسم الصحيح</i></b>"
+                    )
+            else:
+                vj_ai_msg = await msg.reply_text(
+                    "<b><i> 🔍 لقد طلبت الاسم بشكل غير صحيح يقوم الذكاء الصنعي بالبحث عن الاسم الصحيح</i></b>"
+                )
+        except Exception:
+            pass
+
+        movienamelist = [movie.get('title') for movie in movies]
         for techvj in movienamelist:
             try:
                 mv_rqst = mv_rqst.capitalize()
@@ -2880,42 +2948,98 @@ async def advantage_spell_chok(client, name, msg, reply_msg, vj_search):
             if mv_rqst.startswith(techvj[0]):
                 await auto_filter(client, techvj, msg, reply_msg, vj_search_new)
                 break
+
         reqst_gle = mv_rqst.replace(" ", "+")
-        button = [[
-            InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")
-        ]]
+        button = [[InlineKeyboardButton("Gᴏᴏɢʟᴇ", url=f"https://www.google.com/search?q={reqst_gle}")]]
+        
         if NO_RESULTS_MSG:
-            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst)))
-        k = await reply_msg.edit_text(text=script.I_CUDNT.format(mv_rqst), reply_markup=InlineKeyboardMarkup(button))
-        await asyncio.sleep(30)
-        await k.delete()
-        return
-    else:
-        btn = [
-            [
-                InlineKeyboardButton(
-                    text=movie_name.strip(),
-                    callback_data=f"spol#{reqstr1}#{k}",
-                )
-            ]
-            for k, movie_name in enumerate(movielist)
-        ]
-        btn.append([InlineKeyboardButton(text="Close", callback_data=f'spol#{reqstr1}#close_spellcheck')])
-        spell_check_del = await reply_msg.edit_text(
-            text=script.CUDNT_FND.format(mv_rqst),
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
+            await client.send_message(
+                chat_id=LOG_CHANNEL,
+                text=(script.NORSLTS.format(reqstr.id, reqstr.mention, mv_rqst))
+            )
+
         try:
-            if settings['auto_delete']:
-                await asyncio.sleep(600)
-                await spell_check_del.delete()
-        except KeyError:
-            grpid = await active_connection(str(msg.from_user.id))
-            await save_group_settings(grpid, 'auto_delete', True)
-            settings = await get_settings(msg.chat.id)
-            if settings['auto_delete']:
-                await asyncio.sleep(600)
-                await spell_check_del.delete()
+            if reply_msg:
+                try:
+                    k = await reply_msg.edit_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
+                except Exception:
+                    k = await msg.reply_text(
+                        text=script.I_CUDNT.format(mv_rqst),
+                        reply_markup=InlineKeyboardMarkup(button)
+                    )
+            else:
+                k = await msg.reply_text(
+                    text=script.I_CUDNT.format(mv_rqst),
+                    reply_markup=InlineKeyboardMarkup(button)
+                )
+        except Exception:
+            return
+
+        await asyncio.sleep(30)
+        if k:
+            try:
+                await k.delete()
+            except Exception:
+                pass
+        return
+
+    # 📝 normal spell-check keyboard
+    btn = [
+        [
+            InlineKeyboardButton(
+                text=movie_name.strip(),
+                callback_data=f"spol#{reqstr1}#{k}"
+            )
+        ]
+        for k, movie_name in enumerate(movielist)
+    ]
+    btn.append([InlineKeyboardButton(text="Close", callback_data=f'spol#{reqstr1}#close_spellcheck')])
+
+    spell_check_del = None
+    try:
+        if reply_msg:
+            try:
+                spell_check_del = await reply_msg.edit_text(
+                    text=script.CUDNT_FND.format(mv_rqst),
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
+            except Exception:
+                spell_check_del = await msg.reply_text(
+                    text=script.CUDNT_FND.format(mv_rqst),
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
+        else:
+            spell_check_del = await msg.reply_text(
+                text=script.CUDNT_FND.format(mv_rqst),
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
+    except Exception as e:
+        print(f"❌ Could not send spell-check: {e}")
+        return
+
+    # auto delete if enabled
+    try:
+        if settings.get("auto_delete", False):
+            await asyncio.sleep(600)
+            if spell_check_del:
+                try:
+                    await spell_check_del.delete()
+                except Exception:
+                    pass
+    except KeyError:
+        grpid = await active_connection(str(msg.from_user.id))
+        await save_group_settings(grpid, 'auto_delete', True)
+        settings = await get_settings(msg.chat.id)
+        if settings.get("auto_delete", False):
+            await asyncio.sleep(600)
+            if spell_check_del:
+                try:
+                    await spell_check_del.delete()
+                except Exception:
+                    pass
 
 async def manual_filters(client, message, text=False):
     settings = await get_settings(message.chat.id)
@@ -3358,4 +3482,5 @@ async def global_filters(client, message, text=False):
                 break
     else:
         return False
+
 
