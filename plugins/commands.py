@@ -1461,12 +1461,12 @@ async def plans_cmd_handler(client, message):
     if PREMIUM_AND_REFERAL_MODE == False:
         return 
     btn = [            
-        [InlineKeyboardButton("ꜱᴇɴᴅ ᴘᴀʏᴍᴇɴᴛ ʀᴇᴄᴇɪᴘᴛ 🧾", url=f"https://t.me/{OWNER_USERNAME}")],
-        [InlineKeyboardButton("⚠️ ᴄʟᴏsᴇ / ᴅᴇʟᴇᴛᴇ ⚠️", callback_data="close_data")]
+        #[InlineKeyboardButton("ꜱᴇɴᴅ ᴘᴀʏᴍᴇɴᴛ ʀᴇᴄᴇɪᴘᴛ 🧾", url=f"https://t.me/{OWNER_USERNAME}")],
+        [InlineKeyboardButton("⚠️ إغلاق / حذف ⚠️", callback_data="close_data")]
     ]
     reply_markup = InlineKeyboardMarkup(btn)
     await message.reply_photo(
-        photo=PAYMENT_QR,
+        photo='https://i.ibb.co/F7106zk/IMG-20241127-013636-817.jpg',
         caption=PAYMENT_TEXT,
         reply_markup=reply_markup
     )
@@ -1479,16 +1479,20 @@ async def check_plans_cmd(client, message):
     if await db.has_premium_access(user_id):         
         remaining_time = await db.check_remaining_uasge(user_id)             
         expiry_time = remaining_time + datetime.datetime.now()
-        await message.reply_text(f"**Your plans details are :\n\nRemaining Time : {remaining_time}\n\nExpirytime : {expiry_time}**")
+        await message.reply_text(f"**تفاصيل إشتراكك :\n\nالوقت المتبقي : {remaining_time}\n\nوقت انتهاء الإشتراك : {expiry_time}**")
     else:
         btn = [ 
-            [InlineKeyboardButton("ɢᴇᴛ ғʀᴇᴇ ᴛʀᴀɪʟ ғᴏʀ 𝟻 ᴍɪɴᴜᴛᴇꜱ ☺️", callback_data="get_trail")],
-            [InlineKeyboardButton("ʙᴜʏ sᴜʙsᴄʀɪᴘᴛɪᴏɴ : ʀᴇᴍᴏᴠᴇ ᴀᴅs", callback_data="buy_premium")],
-            [InlineKeyboardButton("⚠️ ᴄʟᴏsᴇ / ᴅᴇʟᴇᴛᴇ ⚠️", callback_data="close_data")]
+            [InlineKeyboardButton("إضغط هنا للحصول على تجربة مجانية ل 5 دقائق 😊", callback_data="get_trail")],
+            [InlineKeyboardButton("إشتراك", callback_data="buy_premium")],
+            [InlineKeyboardButton("⚠️ إغلاق / حذف ⚠️", callback_data="close_data")]
         ]
         reply_markup = InlineKeyboardMarkup(btn)
-        m=await message.reply_sticker("CAACAgIAAxkBAAIBTGVjQbHuhOiboQsDm35brLGyLQ28AAJ-GgACglXYSXgCrotQHjibHgQ")         
-        await message.reply_text(f"**😢 You Don't Have Any Premium Subscription.\n\n Check Out Our Premium /plan**",reply_markup=reply_markup)
+        m=await message.reply_sticker("CAACAgQAAxkBAALq9WeRSdM9hkXoRxz6bg7-i0gplncGAAJdAAOp1HEBioo4tsUUfq0eBA") 
+        await message.reply_photo(
+            photo = "https://i.ibb.co/F7106zk/IMG-20241127-013636-817.jpg",
+            caption= f"**ليس لديك إشتراك بالبوت 😥\n\n يمكنك الإشتراك من هنا /plan**",
+            reply_markup=reply_markup
+        )
         await asyncio.sleep(2)
         await m.delete()
 
@@ -1511,4 +1515,5 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+
 
