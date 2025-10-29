@@ -1478,26 +1478,34 @@ async def check_plans_cmd(client, message):
     user_id  = message.from_user.id
     if await db.has_premium_access(user_id):         
         remaining_time = await db.check_remaining_uasge(user_id)             
-        expiry_time = remaining_time + datetime.datetime.now()
+        expiry_time = datetime.datetime.now() + remaining_time
+
+        # Calculate time parts
         days = remaining_time.days
         hours, remainder = divmod(remaining_time.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
+
+        # Build remaining time string
         remaining_str = ""
         if days > 0:
-            remaining_str += f"{days} يوم{' ' if days == 1 else ' '} "
+            remaining_str += f"{days} يوم "
         if hours > 0:
             remaining_str += f"{hours} ساعة "
         if minutes > 0:
             remaining_str += f"{minutes} دقيقة "
-        if days == 0 and hours == 0 and minutes == 0:
+        if not remaining_str:  # when only seconds remain
             remaining_str = f"{seconds} ثانية"
-            
+
+        # Format expiry time nicely
         expiry_str = expiry_time.strftime("%d/%m/%Y - %I:%M %p")
+
+        # Compose the message
         text_time = (
             f"✨ **تفاصيل اشتراكك** ✨\n\n"
             f"⏳ **الوقت المتبقي:** {remaining_str.strip()}\n"
             f"📅 **تاريخ الانتهاء:** {expiry_str}"
         )
+
         await message.reply_text(text_time)
     else:
         btn = [ 
@@ -1534,6 +1542,7 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+
 
 
 
