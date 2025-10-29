@@ -1497,7 +1497,7 @@ async def check_plans_cmd(client, message):
             remaining_str = f"{seconds} ثانية"
 
         # Format expiry time nicely
-        expiry_str = expiry_time.strftime("%d/%m/%Y - %I:%M %p")
+        expiry_str = expiry_time.strftime("%d/%m/%Y")
 
         # Compose the message
         text_time = (
@@ -1542,6 +1542,7 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+
 
 
 
