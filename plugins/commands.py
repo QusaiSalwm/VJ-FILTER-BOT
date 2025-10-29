@@ -1479,7 +1479,25 @@ async def check_plans_cmd(client, message):
     if await db.has_premium_access(user_id):         
         remaining_time = await db.check_remaining_uasge(user_id)             
         expiry_time = remaining_time + datetime.datetime.now()
-        await message.reply_text(f"**تفاصيل إشتراكك :\n\nالوقت المتبقي : {remaining_time}\n\nوقت انتهاء الإشتراك : {expiry_time}**")
+        days = remaining_time.days
+        hours, remainder = divmod(remaining_time.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        remaining_str = ""
+        if days > 0:
+            remaining_str += f"{days} يوم{' ' if days == 1 else ' '} "
+        if hours > 0:
+            remaining_str += f"{hours} ساعة "
+        if minutes > 0:
+            remaining_str += f"{minutes} دقيقة "
+        if days == 0 and hours == 0 and minutes == 0:
+            remaining_str = f"{seconds} ثانية"
+            expiry_str = expiry_time.strftime("%d/%m/%Y - %I:%M %p")
+            text_time = (
+                f"✨ **تفاصيل اشتراكك** ✨\n\n"
+                f"⏳ **الوقت المتبقي:** {remaining_str.strip()}\n"
+                f"📅 **تاريخ الانتهاء:** {expiry_str}"
+            )
+        await message.reply_text(text_time)
     else:
         btn = [ 
             [InlineKeyboardButton("إضغط هنا للحصول على تجربة مجانية ل 5 دقائق 😊", callback_data="get_trail")],
@@ -1515,6 +1533,7 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+
 
 
 
