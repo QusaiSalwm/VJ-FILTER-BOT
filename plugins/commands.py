@@ -1491,12 +1491,13 @@ async def check_plans_cmd(client, message):
             remaining_str += f"{minutes} دقيقة "
         if days == 0 and hours == 0 and minutes == 0:
             remaining_str = f"{seconds} ثانية"
-            expiry_str = expiry_time.strftime("%d/%m/%Y - %I:%M %p")
-            text_time = (
-                f"✨ **تفاصيل اشتراكك** ✨\n\n"
-                f"⏳ **الوقت المتبقي:** {remaining_str.strip()}\n"
-                f"📅 **تاريخ الانتهاء:** {expiry_str}"
-            )
+            
+        expiry_str = expiry_time.strftime("%d/%m/%Y - %I:%M %p")
+        text_time = (
+            f"✨ **تفاصيل اشتراكك** ✨\n\n"
+            f"⏳ **الوقت المتبقي:** {remaining_str.strip()}\n"
+            f"📅 **تاريخ الانتهاء:** {expiry_str}"
+        )
         await message.reply_text(text_time)
     else:
         btn = [ 
@@ -1533,6 +1534,7 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+
 
 
 
