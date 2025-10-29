@@ -169,15 +169,22 @@ async def auto_approve(client, message: ChatJoinRequest):
                 if not await db.has_premium_access(message.from_user.id):
                     if not await check_verification(client, message.from_user.id) and VERIFY == True:
                         btn = [[
-                            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+                            #InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
                         ],[
-                            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+                            InlineKeyboardButton("طريقة الإشتراك", url=VERIFY_TUTORIAL)
                         ]]
-                        await client.send_message(
-                            chat_id=message.from_user.id,
-                            text="<b>You are not verified !\nKindly verify to continue !</b>",
-                            protect_content=True,
-                            reply_markup=InlineKeyboardMarkup(btn)
+                        #await client.send_message(
+                         #   chat_id=message.from_user.id,
+                          #  text="<b>You are not verified !\nKindly verify to continue !</b>",
+                           # protect_content=True,
+                            #reply_markup=InlineKeyboardMarkup(btn)
+                        #)
+                        reply_markup = InlineKeyboardMarkup(btn)
+                        m=await message.reply_sticker("CAACAgQAAxkBAALq9WeRSdM9hkXoRxz6bg7-i0gplncGAAJdAAOp1HEBioo4tsUUfq0eBA") 
+                        await message.reply_photo(
+                        photo = "https://i.ibb.co/F7106zk/IMG-20241127-013636-817.jpg",
+                        caption= "<b>نعتذر لا يمكنك الحصول على الملفات لأنك لست مشترك في البوت !\nنرجو منك الاشتراك ثم اعادة الطلب لتحصل على الملفات ! \nيمكنك الإشتراك من خلال الضغط على الامر /plan</b>",
+                        reply_markup=reply_markup
                         )
                         return
                 if STREAM_MODE == True:
@@ -238,15 +245,22 @@ async def auto_approve(client, message: ChatJoinRequest):
                 if not await db.has_premium_access(message.from_user.id):
                     if not await check_verification(client, message.from_user.id) and VERIFY == True:
                         btn = [[
-                            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+                            #InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
                         ],[
-                            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+                            InlineKeyboardButton("طريقة الإشتراك", url=VERIFY_TUTORIAL)
                         ]]
-                        await client.send_message(
-                            chat_id=message.from_user.id,
-                            text="<b>You are not verified !\nKindly verify to continue !</b>",
-                            protect_content=True,
-                            reply_markup=InlineKeyboardMarkup(btn)
+                        #await client.send_message(
+                        #    chat_id=message.from_user.id,
+                        #    text="<b>You are not verified !\nKindly verify to continue !</b>",
+                        #    protect_content=True,
+                        #    reply_markup=InlineKeyboardMarkup(btn)
+                        #)
+                        reply_markup = InlineKeyboardMarkup(btn)
+                        m=await message.reply_sticker("CAACAgQAAxkBAALq9WeRSdM9hkXoRxz6bg7-i0gplncGAAJdAAOp1HEBioo4tsUUfq0eBA") 
+                        await message.reply_photo(
+                        photo = "https://i.ibb.co/F7106zk/IMG-20241127-013636-817.jpg",
+                        text= "<b>نعتذر لا يمكنك الحصول على الملفات لأنك لست مشترك في البوت !\nنرجو منك الاشتراك ثم اعادة الطلب لتحصل على الملفات ! \nيمكنك الإشتراك من خلال الضغط على الامر /plan</b>",
+                        reply_markup=reply_markup
                         )
                         return
                 if STREAM_MODE == True:
@@ -311,14 +325,14 @@ async def auto_approve(client, message: ChatJoinRequest):
         if not await db.has_premium_access(message.from_user.id):
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
                 btn = [[
-                    InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+                    #InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
                 ],[
-                    InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+                    InlineKeyboardButton("طريقة الإشتراك", url=VERIFY_TUTORIAL)
                 ]]
                 await client.send_message(
                     chat_id=message.from_user.id,
-                    text="<b>You are not verified !\nKindly verify to continue !</b>",
-                    protect_content=True,
+                    text="<b>نعتذر لا يمكنك الحصول على الملفات لأنك لست مشترك في البوت !\nنرجو منك الاشتراك ثم اعادة الطلب لتحصل على الملفات ! \nيمكنك الإشتراك من خلال الضغط على الامر /plan</b>",
+                    protect_content=False,
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
